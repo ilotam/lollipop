@@ -17,3 +17,7 @@ In order to use this chart you will need to have a data source that has two colu
 
 
 ![image](https://user-images.githubusercontent.com/47331711/109519336-6d7f7d00-7aab-11eb-9a67-ca930a932963.png)
+
+# Logo
+
+![lolli_logo](https://user-images.githubusercontent.com/47331711/111787831-b616a300-88bf-11eb-9c2c-39e8ffbe2e43.png)

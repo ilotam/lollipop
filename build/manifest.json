@@ -1,19 +1,19 @@
 {
-  "name": "My Visualizations",
-  "organization": "MyOrg",
-  "description": "My first visualization package.",
-  "logoUrl": "https://logo",
+  "name": "Lollipop Chart",
+  "organization": "Tamás Ilosvay",
+  "description": "Lollipop chart for showing relationship between a numeric and a categoric variable.",
+  "logoUrl": "https://user-images.githubusercontent.com/47331711/111787831-b616a300-88bf-11eb-9c2c-39e8ffbe2e43.png",
   "organizationUrl": "https://url",
-  "supportUrl": "https://url",
+  "supportUrl": "https://github.com/ilotam/lollipop",
   "privacyPolicyUrl": "https://url",
   "termsOfServiceUrl": "https://url",
-  "packageUrl": "https://url",
+  "packageUrl": "https://github.com/ilotam/lollipop",
   "devMode": false,
   "components": [
     {
-      "name": "myViz",
-      "description": "My first Community Visualization",
-      "iconUrl": "https://url",
+      "name": "Lollipop Chart",
+      "description": "Lollipop Chart",
+      "iconUrl": "https://user-images.githubusercontent.com/47331711/111787831-b616a300-88bf-11eb-9c2c-39e8ffbe2e43.png",
       "resource": {
         "js": "gs://smart_city_bucket/lollipop/prod/index.js",
         "config": "gs://smart_city_bucket/lollipop/prod/index.json",

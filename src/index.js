@@ -6,6 +6,30 @@ const local = require('./localMessage.js');
 // change this to 'false' before deploying
 export const LOCAL = false;
 
+function getMaxMetric(message){
+  var max = 0;
+  
+  var tblList = message.tables.DEFAULT;
+  tblList.forEach(function(row) {
+    if(row["metric"][0] > max){
+      max = row["metric"][0];
+    }   
+  });
+  
+  return Math.ceil(max/100)*100;
+}
+function split_at_index_first(value, index)
+{
+ return value.substring(0, index);
+}
+function split_at_index_last(value, index)
+{
+ return value.substring(index);
+}
+function sortDate(a, b){
+  return a.Name - b.Name;
+}
+
 
 // parse the style value
 const styleVal = (message, styleId) => {
@@ -43,21 +67,27 @@ const drawViz = message => {
   .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
 
-        var tblList = message.tables.DEFAULT;
+      var tblList = message.tables.DEFAULT;
+     
 
         var data = tblList.map(row => {
-        
+
+        var name = split_at_index_first( split_at_index_last(row["dimension"][0], 8), 2);
+        console.log(name);
                     
             return {
                
-              Country: row["dimension"][0],   
-                Value:  row["dimension"][1]
+              Name:  name,   
+              Value:  row["metric"][0]
             }  
-        });
+        }).sort(sortDate);
 
+  var max = getMaxMetric(message);
+  //console.log(max);
+    
   // Add X axis
   var x = d3.scaleLinear()
-  .domain([0, 13000])
+  .domain([0, max])
   .range([ 0, width]);
   svg.append("g")
   .attr("transform", "translate(0," + height + ")")
@@ -69,7 +99,7 @@ const drawViz = message => {
   // Y axis
   var y = d3.scaleBand()
   .range([ 0, height ])
-  .domain(data.map(function(d) { return d.Country; }))
+  .domain(data.map(function(d) { return d.Name; }))
   .padding(1);
   svg.append("g")
   .call(d3.axisLeft(y))
@@ -82,8 +112,8 @@ const drawViz = message => {
   .append("line")
   .attr("x1", function(d) { return x(d.Value); })
   .attr("x2", x(0))
-  .attr("y1", function(d) { return y(d.Country); })
-  .attr("y2", function(d) { return y(d.Country); })
+  .attr("y1", function(d) { return y(d.Name); })
+  .attr("y2", function(d) { return y(d.Name); })
   .attr("stroke", "grey")
 
   // Circles
@@ -92,7 +122,7 @@ const drawViz = message => {
   .enter()
   .append("circle")
   .attr("cx", function(d) { return x(d.Value); })
-  .attr("cy", function(d) { return y(d.Country); })
+  .attr("cy", function(d) { return y(d.Name); })
   .attr("r", "4")
   .style("fill", "#69b3a2")
   .attr("stroke", "black")

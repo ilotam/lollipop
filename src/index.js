@@ -48,7 +48,7 @@ const styleVal = (message, styleId) => {
 const drawViz = message => {
   
   // set the dimensions and margins of the graph
-  var margin = {top: 10, right: 30, bottom: 40, left: 100},
+  let margin = {top: 10, right: 30, bottom: 40, left: 100},
   width = 460 - margin.left - margin.right,
   height = 500 - margin.top - margin.bottom;
 
@@ -59,7 +59,7 @@ const drawViz = message => {
   }
 
   // append the svg object to the body of the page
-  var svg = d3.select("body")
+  let svg = d3.select("body")
   .append("svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
@@ -67,26 +67,19 @@ const drawViz = message => {
   .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
 
-      var tblList = message.tables.DEFAULT;
-     
-
-        var data = tblList.map(row => {
-
-        var name = split_at_index_first( split_at_index_last(row["dimension"][0], 8), 2);
-        console.log(name);
-                    
-            return {
-               
-              Name:  name,   
-              Value:  row["metric"][0]
-            }  
+  let tblList = message.tables.DEFAULT;
+  let data = tblList.map(row => {
+      let name = split_at_index_first( split_at_index_last(row["dimension"][0], 8), 2);
+        return {
+          Name:  name,
+          Value:  row["metric"][0]
+        }
         }).sort(sortDate);
 
-  var max = getMaxMetric(message);
-  //console.log(max);
-    
+  let max = getMaxMetric(message);
+
   // Add X axis
-  var x = d3.scaleLinear()
+ let x = d3.scaleLinear()
   .domain([0, max])
   .range([ 0, width]);
   svg.append("g")
@@ -97,13 +90,12 @@ const drawViz = message => {
     .style("text-anchor", "end");
 
   // Y axis
-  var y = d3.scaleBand()
+  let y = d3.scaleBand()
   .range([ 0, height ])
   .domain(data.map(function(d) { return d.Name; }))
   .padding(1);
   svg.append("g")
   .call(d3.axisLeft(y))
-
 
   // Lines
   svg.selectAll("myline")
@@ -126,9 +118,8 @@ const drawViz = message => {
   .attr("r", "4")
   .style("fill", "#69b3a2")
   .attr("stroke", "black")
-
-
 };
+
 // renders locally
 if (LOCAL) {
   drawViz(local.message);
